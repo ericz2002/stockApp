@@ -11,7 +11,9 @@ This is a stock trading simulator targeted for k1-12 economy/financial education
 For development purpose, follow the following steps,
 
 #### Setup python3 virtual enviroment
+for ubuntu:
 ```
+sudo apt-get install python3-venv
 python3 -m venv py36-venv
 source py36-venv/bin/activate
 ```
