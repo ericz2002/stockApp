@@ -1,0 +1,28 @@
+﻿<h1>Total Assets: {{sum | number : '.2-2'}}</h1>
+<a routerLink="addstock" class="btn btn-lg btn-success mb-2">Add stock</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th style="width: 30%">Type</th>
+            <th style="width: 30%">Symbol</th>
+            <th style="width: 30%">Value</th>
+            <th style="width: 10%"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let asset of assets">
+            <td>{{asset.type}}</td>
+            <td>{{asset.symbol}}</td>
+            <td>{{asset.value | number : '.2-2'}}</td>
+            <td style="white-space: nowrap">
+                <a *ngIf="asset.type!='cash'" routerLink="buy/{{asset.symbol}}" class="btn btn-sm btn-success mr-1">Buy</a>
+                <a *ngIf="asset.type!='cash'" routerLink="sell/{{asset.symbol}}" class="btn btn-sm btn-primary mr-1">Sell</a>
+            </td>
+        </tr>
+        <tr *ngIf="!assets">
+            <td colspan="4" class="text-center">
+                <span class="spinner-border spinner-border-lg align-center"></span>
+            </td>
+        </tr>
+    </tbody>
+</table>

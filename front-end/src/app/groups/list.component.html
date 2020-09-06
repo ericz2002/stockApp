@@ -1,0 +1,29 @@
+﻿<h1>Groups</h1>
+<a routerLink="add" class="btn btn-sm btn-success mb-2">Add Group</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th style="width: 25%">Group Name</th>
+            <th style="width: 65%">Desciption</th>
+            <th style="width: 10%"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let ugroup of ugroups">
+            <td>{{ugroup.groupname}}</td>
+            <td>{{ugroup.description}}</td>
+            <td style="white-space: nowrap">
+                <a routerLink="edit/{{ugroup.groupname}}" class="btn btn-sm btn-primary mr-1" *ngIf="ugroup.groupname!=='default'">Edit</a>
+                <button (click)="deleteGroup(ugroup.groupname)" class="btn btn-sm btn-danger btn-delete-user" *ngIf="ugroup.groupname!=='default'" [disabled]="ugroup.isDeleting">
+                    <span *ngIf="ugroup.isDeleting" class="spinner-border spinner-border-sm"></span>
+                    <span *ngIf="!ugroup.isDeleting">Delete</span>
+                </button>
+            </td>
+        </tr>
+        <tr *ngIf="!ugroups">
+            <td colspan="4" class="text-center">
+                <span class="spinner-border spinner-border-lg align-center"></span>
+            </td>
+        </tr>
+    </tbody>
+</table>

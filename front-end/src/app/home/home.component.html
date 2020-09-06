@@ -1,0 +1,16 @@
+﻿<div class="p-4">
+    <div *ngIf="user.is_admin; else userHome" class="container">
+        <h1>Hello {{user.firstname}}!</h1>
+        <p>You're logged in as an admin in NCSSM Stock Trading Simulator</p>
+        <p><a routerLink="/users">Manage Users</a></p>
+        <p><a routerLink="/groups">Manage Classes</a></p>
+        <p><a routerLink="/users/edit/{{user.username}}">Update Admin Info</a></p>
+    </div>
+    <ng-template #userHome>
+        <div class="container">
+            <h1>Hello {{user.firstname}}!</h1>
+            <p>You're logged in as a student in NCSSM Stock Trading Simulator</p>
+            <p><a routerLink="/users/edit/{{user.username}}">Update User Info</a></p>
+        </div>
+    </ng-template>
+</div>

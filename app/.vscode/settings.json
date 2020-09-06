@@ -1,0 +1,4 @@
+{
+    "python.pythonPath": "/home/jianzzha/stockApp/py36-venv/bin/python",
+    "python.formatting.provider": "black"
+}

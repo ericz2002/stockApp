@@ -1,0 +1,36 @@
+﻿<h1>Add Fund</h1>
+<div>
+<select name="group" class="form-control" [(ngModel)]="group" (ngModelChange)="onGroupChange($event)">
+  <option *ngFor="let l of groupList" [value]="l.groupname">
+    {{l?.description}}
+  </option>
+</select>
+</div>
+<a routerLink="fundgroup/{{group}}" class="btn btn-sm btn-success mb-2">Fund Group</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th style="width: 30%">First Name</th>
+            <th style="width: 30%">Last Name</th>
+            <th style="width: 15%">Assets</th>
+            <th style="width: 15%">Cash</th>
+            <th style="width: 10%"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let userassets of groupAssets; index as i">
+            <td>{{userassets.user.firstname}}</td>
+            <td>{{userassets.user.lastname}}</td>
+            <td>{{userassets.total | number : '.2-2'}}</td>
+            <td>{{getCash(i) | number : '.2-2'}}</td>
+            <td style="white-space: nowrap">
+                <a routerLink="funduser/{{userassets.user.username}}" class="btn btn-sm btn-primary mr-1">Fund User</a>
+            </td>
+        </tr>
+        <tr *ngIf="!groupAssets">
+            <td colspan="4" class="text-center">
+                <span class="spinner-border spinner-border-lg align-center"></span>
+            </td>
+        </tr>
+    </tbody>
+</table>

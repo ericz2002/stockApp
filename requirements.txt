@@ -1,0 +1,9 @@
+pyyaml
+sqlalchemy
+mysql-connector-python
+python-jose[cryptography]
+passlib[bcrypt]
+python-multipart
+finnhub-python==1.1.7
+fastapi
+uvicorn
