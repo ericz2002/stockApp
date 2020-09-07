@@ -1,0 +1,6 @@
+*.pyc
+.devcontainer
+.vscode
+**/.vscode
+*.yml
+env.conf
