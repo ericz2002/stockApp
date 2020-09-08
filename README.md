@@ -26,7 +26,7 @@ To make contribution, you will need to fork the repo first. Follow the [fork ins
 Once you have it forked, `git clone <your_fork_url> stockApp && cd stockApp`
 
 #### Setup python3 virtual enviroment
-for ubuntu:
+For ubuntu:
 ```
 apt-get update -y
 sudo apt-get install -y python3-venv
@@ -51,6 +51,7 @@ EOF
 ```
 
 #### Ubuntu docker install
+```
 sudo apt update
 sudo apt install apt-transport-https ca-certificates curl software-properties-common
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
@@ -58,6 +59,7 @@ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubun
 sudo apt update
 apt-cache policy docker-ce
 sudo apt install docker-ce
+```
 
 #### Windows 10 docker install 
 For Windows 10, hyper-v should be enabled first. User may need to adjust BIOS setting first in order to 
