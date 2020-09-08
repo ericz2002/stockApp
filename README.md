@@ -10,14 +10,6 @@ This is a stock trading simulator targeted for k1-12 economy/financial education
 ### For Development on Linux or Macos
 For development purpose, follow the following steps,
 
-#### Setup python3 virtual enviroment
-for ubuntu:
-```
-sudo apt-get install python3-venv
-python3 -m venv py36-venv
-source py36-venv/bin/activate
-```
-
 #### Setup node
 ```
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
@@ -25,6 +17,7 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 echo "install node"
 nvm install v12.18.3 && nvm use v12.18.3
+npm install -g @angular/cli
 ```
 
 #### Clone the repo
@@ -32,8 +25,19 @@ To make contribution, you will need to fork the repo first. Follow the [fork ins
 
 Once you have it forked, `git clone <your_fork_url> stockApp && cd stockApp`
 
+#### Setup python3 virtual enviroment
+for ubuntu:
+```
+apt-get update -y
+sudo apt-get install -y python3-venv
+python3 -m venv py36-venv
+source py36-venv/bin/activate
+pip install -r requirements.txt
+```
+
 #### Setup secret enviroment variables
-```cat > env.conf <<EOF
+```
+cat > env.conf <<EOF
 # jwt token encryption key
 export jwt_key=<key>
 
@@ -45,6 +49,26 @@ export mysql_username=<username>
 export mysql_password=<password>
 EOF
 ```
+
+#### Ubuntu docker install
+sudo apt update
+sudo apt install apt-transport-https ca-certificates curl software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+sudo apt update
+apt-cache policy docker-ce
+sudo apt install docker-ce
+
+#### Windows 10 docker install 
+For Windows 10, hyper-v should be enabled first. User may need to adjust BIOS setting first in order to 
+enable hyper v. For example, in Lenova laptop BIOS setting, under Security tab, intel virtualization 
+technology should be enabled. 
+
+After hyper-v is enabled, windows 10 docker desktop can be installed. This is the docker daemon for 
+Windows 10 enviroment. One should follow [this instruction](https://nickjanetakis.com/blog/setting-up-docker-for-windows-and-wsl-to-work-flawlessly) to set up the daemon.
+
+To connect to the Windows 10 docker daemon, in WSL,
+`echo "export DOCKER_HOST=tcp://localhost:2375" >> ~/.bashrc && source ~/.bashrc`
 
 #### Start the mysql database and python API on your computer
 `./start_on_mac.sh`

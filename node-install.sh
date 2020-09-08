@@ -10,6 +10,17 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 
 echo "install node"
 nvm install v12.18.3 && nvm use v12.18.3
+npm install -g @angular/cli
+
+echo "install python virtual enviroment"
+ID_LIKE=$(sed -n -r -e 's/ID_LIKE="(\w+)"/\1/p' /etc/os-release)
+if [ "${ID_LIKE}" == "debian" ]; then
+    apt-get update -y
+    apt-get install -y python3-venv
+fi
+python3 -m venv py36-venv
+source py36-venv/bin/activate
+pip install -r requirements.txt
 
 echo "install nginx self signed cert"
 sudo mkdir /var/lib/sslcerts
