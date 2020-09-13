@@ -4,3 +4,4 @@
 **/.vscode
 *.yml
 env.conf
+**/*.pyc
