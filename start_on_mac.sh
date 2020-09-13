@@ -51,6 +51,11 @@ else
     echo "mysql docker container is already running"
 fi
 
+if [ "${VIRTUAL_ENV:-none}" == "none" ]; then
+	echo "activate python virtual environment"
+	source ./py36-venv/bin/activate
+fi
+
 pushd app
 trap sigfunc TERM INT SIGUSR1
 ./wait-for-db.sh
