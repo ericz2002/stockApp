@@ -26,14 +26,19 @@ To make contribution, you will need to fork the repo first. Follow the [fork ins
 Once you have it forked, `git clone <your_fork_url> stockApp && cd stockApp`
 
 #### Setup python3 virtual enviroment
-For ubuntu:
+For ubuntu, the following is necessary:
 ```
 apt-get update -y
 sudo apt-get install -y python3-venv
+```
+
+The following is common for ubuntu and centos:
+```
 python3 -m venv py36-venv
 source py36-venv/bin/activate
 pip install -r requirements.txt
 ```
+
 
 #### Setup secret enviroment variables
 ```
