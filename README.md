@@ -75,7 +75,7 @@ After hyper-v is enabled, windows 10 docker desktop can be installed. This is th
 Windows 10 enviroment. One should follow [this instruction](https://nickjanetakis.com/blog/setting-up-docker-for-windows-and-wsl-to-work-flawlessly) to set up the daemon.
 
 To connect to the Windows 10 docker daemon, in WSL,
-`echo "export DOCKER_HOST=tcp://localhost:2375" >> ~/.bashrc && source ~/.bashrc`
+```echo "export DOCKER_HOST=tcp://localhost:2375" >> ~/.bashrc && source ~/.bashrc```
 
 #### Start the mysql database and python API on your computer
 `./start_on_mac.sh`
@@ -98,8 +98,8 @@ git clone https://github.com/ericz2002/stockApp.git stockApp && cd stockApp
 ./node-install.sh
 ```
 
-Once the one-time setup is done, setup a Jenkins freedom pipeline with the following script
-
+Once the one-time setup is done, setup a Jenkins freedom pipeline with the following script,
+```
 set -o nounset
 set -e
 set +x
