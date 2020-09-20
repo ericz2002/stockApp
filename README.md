@@ -88,8 +88,11 @@ In your browser, navigate to http://127.0.0.1:8000/docs. You should be able to s
 
 Once the angular build is complete, point your browser to http://127.0.0.1:4200/
 
-### For AWS
-For production deployment in AWS, login to a AWS running instance,
+### Auto deployment on AWS
+Auto deployment means when a change is committed and pushed to this repo, the new code is automatically deployed in the production enviroment. 
+[Jenkins](https://www.jenkins.io/doc/) can be used to assist the auto deployment. Here is an example on how to use Jenkins for auto deployment 
+in AWS. Firt install Jenkins on a AWS instance. This can be done via linux package manager. Alternatively Jenkins docker image works too. 
+After Jenkins is installed, setup a Jenkins freedom pipeline with the following script,
 ```
 git clone <git url> stockApp && cd stockApp
 ./node-install.sh
@@ -165,6 +168,8 @@ docker run -d --rm --net host --name nginx \
 ```
 
 For better security practice, secret vault should be used on AWS for secret protection. For example, we used jenkins for automatic deployment on AWS when there is a push on github. The jenkins server uses secret store for password protection. When the jenkins auto deployment is triggered, it retrieves the secrets and passes them in as enviroment varibles. 
+
+This repo has a webhook pointing to the AWS Jenkins URL. A push to this repo will trigger the webhook and send notification to the Jenkins which will kick off the above script for auto deployment.
 
 ## Acknowledgment
 This open source project is initially started by Eric Zhang, a NCSSM high school
