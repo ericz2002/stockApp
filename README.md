@@ -89,18 +89,20 @@ In your browser, navigate to http://127.0.0.1:8000/docs. You should be able to s
 Once the angular build is complete, point your browser to http://127.0.0.1:4200/
 
 ### Auto deployment on AWS
-Auto deployment means when a change is committed and pushed to this repo, the new code is automatically deployed in the production enviroment. 
+Auto deployment means when a change is committed and pushed into this repo, the updated code is automatically deployed in the production enviroment. 
 [Jenkins](https://www.jenkins.io/doc/) can be used to assist the auto deployment. Here is an example on how to use Jenkins for auto deployment 
-in AWS. Firt install Jenkins on a AWS instance. This can be done via linux package manager. Alternatively Jenkins docker image works too. 
-After Jenkins is installed, setup a Jenkins freedom pipeline with the following script,
+in AWS. Firt, install Jenkins on a AWS instance. This can be done via linux package manager. Alternatively, Jenkins docker image works too. 
+After Jenkins is installed and started, do the following one-time setup on the AWS instance,
 ```
-git clone <git url> stockApp && cd stockApp
+git clone https://github.com/ericz2002/stockApp.git stockApp && cd stockApp
 ./node-install.sh
+```
 
-export jwt_key=<key>
-export finnhub_token=<token>
-export mysql_username=<username>
-export mysql_password=<password>
+Once the one-time setup is done, setup a Jenkins freedom pipeline with the following script
+
+set -o nounset
+set -e
+set +x
 
 if [ ${jwt_key:-x} == "x" ]; then
     echo "secret jwt_key needs to be passed in as env var"
@@ -128,8 +130,8 @@ if (( mysqlIns == 0 )); then
     echo "starting mysql docker container"
     sudo mkdir -p /var/lib/mysql
     docker run -d --rm -p 3306:3306 --name=mysql \
-	       -e MYSQL_DATABASE=eclass -e MYSQL_USER=stock \
-	       -e MYSQL_PASSWORD=stock -e MYSQL_ROOT_PASSWORD=stock \
+	       -e MYSQL_DATABASE=eclass -e MYSQL_USER=${mysql_username} \
+	       -e MYSQL_PASSWORD=${mysql_password} -e MYSQL_ROOT_PASSWORD=${mysql_password} \
 	       -v /var/lib/mysql:/var/lib/mysql \
 	       mysql
 else
@@ -148,7 +150,10 @@ fi
 
 docker build -t stockapi .
 echo "starting stockapi container"
-docker run -d --rm --name stockapi --net host stockapi
+docker run -d --rm --name stockapi --net host \
+           -e jwt_key=${jwt_key} -e finnhub_token=${finnhub_token} \
+           -e mysql_username=${mysql_username} -e mysql_password=${mysql_password} \
+	   stockapi 
 
 echo "stop nginx"
 nginxIns=$(docker ps -f "name=nginx" --format "{{.ID}}" | wc -l)
@@ -167,9 +172,9 @@ docker run -d --rm --net host --name nginx \
 	nginx
 ```
 
-For better security practice, secret vault should be used on AWS for secret protection. For example, we used jenkins for automatic deployment on AWS when there is a push on github. The jenkins server uses secret store for password protection. When the jenkins auto deployment is triggered, it retrieves the secrets and passes them in as enviroment varibles. 
+For better security practice, the jenkins server secret store is used for password protection. When the jenkins auto deployment is triggered, it retrieves the secrets and passes them into the above bash script as enviroment varibles. 
 
-This repo has a webhook pointing to the AWS Jenkins URL. A push to this repo will trigger the webhook and send notification to the Jenkins which will kick off the above script for auto deployment.
+To trigger the auto deploment, this repo has a webhook pointing to the AWS Jenkins URL. A push to this repo will trigger the webhook and send notification to the Jenkins which will kick off the above script for auto deployment.
 
 ## Acknowledgment
 This open source project is initially started by Eric Zhang, a NCSSM high school
